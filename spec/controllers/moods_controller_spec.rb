@@ -23,5 +23,11 @@ describe MoodsController do
       Mood.should_receive(:create).with(hash_including date: date.to_s)
       post :create, unhappy: 1, happy: 0, date: date
     end
+
+    it "should display a flash after create votes" do
+      date = DateTime.new - 1.day
+      post :create, unhappy: 1, happy: 0, date: date
+      flash[:notice].should == "Registered!"
+    end
   end
 end
