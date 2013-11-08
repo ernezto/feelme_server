@@ -5,19 +5,14 @@ describe MoodsController do
   describe "POST create" do
 
     it "should save 24 unhappy moods" do
-      count = 0
-      Mood.any_instance.stub(:save) do
-          count+=1
-      end
-      post :create, unhappy_value: 24, happy_value: 0
-      count.should == 24
+      expect {
+        post :create, unhappy_value: 24, happy_value: 0, date: DateTime.new
+      }.to change{ Mood.count }.by(24)
     end
 
     it "should save 24 happy moods" do
-      count =0  
-      Mood.any_instance.stub(:save) do
-        count+=1
-      end
+      count =0
+      Mood.any_instance.stub(:save) { count += 1 }
       post :create, happy_value: 24, unhappy_value: 0
       count.should == 24
     end

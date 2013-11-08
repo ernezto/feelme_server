@@ -1,6 +1,5 @@
 class MoodsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     unhappy_moods = params[:unhappy_value].to_i || 0
