@@ -11,10 +11,9 @@ describe MoodsController do
     end
 
     it "should save 24 happy moods" do
-      count =0
-      Mood.any_instance.stub(:save) { count += 1 }
-      post :create, happy_value: 24, unhappy_value: 0
-      count.should == 24
+      expect {
+        post :create, unhappy_value: 0, happy_value: 24, date: DateTime.new
+      }.to change{ Mood.count }.by(24)
     end
 
     it "should create the moods with the specified date" do
@@ -32,14 +31,21 @@ describe MoodsController do
       flash[:notice].should == "Registered!"
     end
 
-    it "should redirect to action new" do
-      post :create, unhappy_value: 0, happy_value: 0, date: DateTime.new
-      response.should redirect_to action: 'new'
+    it "should render #new after create action" do
+      post :create, unhappy_value: 0, happy_value: 0
+        response.should render_template("new")
     end
 
-    it "should display error message when a date is not provided" do
+    it "should not save if Mood is invalid" do
+      Mood.any_instance.
+        should_not_receive(:save)
       post :create, unhappy_value: 1, happy_value: 0
-      assigns(:error).should == "Mood not valid"
     end
+
+    it "should display a flash that Mood is invalid" do
+      post :create, unhappy_value: 1, happy_value: 0
+      flash[:error].should == "Mood not valid"
+    end
+    
   end
 end

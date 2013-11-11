@@ -15,12 +15,11 @@ class MoodsController < ApplicationController
     end
 
     if moods.map(&:valid?).include? false
-      @error = "Mood not valid"
+      flash[:error] = "Mood not valid"
+    else
+      moods.map(&:save)
+      flash[:notice]="Registered!"
     end
-
-    moods.map(&:save)
-
-    flash[:notice]="Registered!"
-    redirect_to action: 'new'
+    render "new"
   end
 end
