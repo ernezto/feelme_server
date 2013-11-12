@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber-rails', require: false
+  gem 'shoulda-matchers'
   gem 'database_cleaner'
 end
 
