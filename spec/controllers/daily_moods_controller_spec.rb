@@ -41,49 +41,14 @@ describe DailyMoodsController do
       post :create, daily_mood: { unhappy_count: "a", happy_count: 15, date: DateTime.now }
     end
 
-    xit "should display a flash after create votes" do
-      create_valid_mood
-      flash[:notice].should == "Registered!"
+    it "should display Registered! message" do
+      post :create, daily_mood: { unhappy_count: 10, happy_count: 15, date: DateTime.now }
+      flash[:success].should =="Registered!"
     end
 
-    xit "should render #new after create action" do
-      post :create, unhappy_value: 0, happy_value: 0
-        response.should render_template("new")
-    end
-
-    xit "should not save if Mood is invalid" do
-      Mood.any_instance.
-        should_not_receive(:save)
-      post :create, unhappy_value: 1, happy_value: 0
-    end
-
-    xit "should display a flash that Mood is invalid" do
-      post :create, unhappy_value: 1, happy_value: 0
-      flash[:error].should == "Mood not valid"
-    end
-
-    xit "should have only a message for completed action" do
-      create_valid_mood 
-      post :create, unhappy_value: 1, happy_value: 0
-      flash[:notice].should == nil
-      flash[:error].should == "Mood not valid"
-    end
-
-    xit "should display an error when happy_value is invalid" do
-      date = DateTime.new - 1.day
-      post :create, unhappy_value: 1, happy_value: "a", date: date
-      flash[:error].should == "Mood not valid"
-    end
-
-    xit "should display an error when unhappy_value is invalid" do
-      date = DateTime.new - 1.day
-      post :create, unhappy_value: "a", happy_value: 1, date: date
-      flash[:error].should == "Mood not valid"
-    end
-
-    def create_valid_mood
-      date = DateTime.new - 1.day
-      post :create, unhappy_value: 1, happy_value: 0, date: date
+    it "should not display Registered! message for invalid Mood" do
+      post :create, daily_mood: { unhappy_count: "a", happy_count: 15, date: DateTime.now }
+      flash[:success].should_not =="Registered!"
     end
   end
 end

@@ -11,17 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112162148) do
+ActiveRecord::Schema.define(version: 20131113161326) do
 
   create_table "daily_moods", force: true do |t|
     t.datetime "date"
     t.integer  "happy_count"
     t.integer  "unhappy_count"
-  end
-
-  create_table "moods", force: true do |t|
-    t.datetime "date"
-    t.integer  "vote_value"
   end
 
 end

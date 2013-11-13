@@ -5,7 +5,10 @@ class DailyMoodsController < ApplicationController
 
   def create
     @daily_mood = DailyMood.new(daily_mood_params)
-    @daily_mood.save if @daily_mood.valid?
+    if @daily_mood.valid?
+      @daily_mood.save
+      flash[:success] = "Registered!"
+    end
     render "new"
   end
 
