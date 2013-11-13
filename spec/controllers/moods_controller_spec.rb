@@ -6,7 +6,10 @@ describe MoodsController do
 
     it "should save 24 unhappy moods" do
       expect {
-        post :create, unhappy_value: 24, happy_value: 0, date: DateTime.new
+        post :create,
+        unhappy_value: 24,
+        happy_value: 0,
+        date: DateTime.new
       }.to change{ Mood.count }.by(24)
     end
 
@@ -26,8 +29,7 @@ describe MoodsController do
     end
 
     it "should display a flash after create votes" do
-      date = DateTime.new - 1.day
-      post :create, unhappy_value: 1, happy_value: 0, date: date
+      create_valid_mood 
       flash[:notice].should == "Registered!"
     end
 
@@ -46,6 +48,29 @@ describe MoodsController do
       post :create, unhappy_value: 1, happy_value: 0
       flash[:error].should == "Mood not valid"
     end
-    
+
+    it "should have only a message for completed action" do
+      create_valid_mood 
+      post :create, unhappy_value: 1, happy_value: 0
+      flash[:notice].should == nil
+      flash[:error].should == "Mood not valid"
+    end
+
+    it "should display an error when happy_value is invalid" do
+      date = DateTime.new - 1.day
+      post :create, unhappy_value: 1, happy_value: "a", date: date
+      flash[:error].should == "Mood not valid"
+    end
+
+    it "should display an error when unhappy_value is invalid" do
+      date = DateTime.new - 1.day
+      post :create, unhappy_value: "a", happy_value: 1, date: date
+      flash[:error].should == "Mood not valid"
+    end
+
+    def create_valid_mood 
+      date = DateTime.new - 1.day
+      post :create, unhappy_value: 1, happy_value: 0, date: date
+    end
   end
 end
