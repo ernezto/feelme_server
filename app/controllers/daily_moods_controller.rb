@@ -8,8 +8,10 @@ class DailyMoodsController < ApplicationController
     if @daily_mood.valid?
       @daily_mood.save
       flash[:success] = "Registered!"
+      redirect_to action: "new"
+    else
+      render action: "new"
     end
-    render "new"
   end
 
   private

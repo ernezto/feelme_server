@@ -50,5 +50,15 @@ describe DailyMoodsController do
       post :create, daily_mood: { unhappy_count: "a", happy_count: 15, date: DateTime.now }
       flash[:success].should_not =="Registered!"
     end
+
+    it "should redirect to #new for valid Mood" do
+      post :create, daily_mood: { unhappy_count: 15, happy_count: 15, date: DateTime.now }
+      response.should redirect_to action: "new"
+    end
+
+    it "should not redirect for invalid Mood" do
+      post :create, daily_mood: { unhappy_count: "a", happy_count: 15, date: DateTime.now }
+      response.should render_template "new"
+    end
   end
 end
