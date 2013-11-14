@@ -4,6 +4,8 @@ module NavigationHelpers
  
     when /home_page/
       '/'
+    when /dashboard/
+      'http://localhost:3030'
     else
       begin
         page_name =~ /the (.*) page/

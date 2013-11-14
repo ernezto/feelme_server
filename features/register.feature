@@ -11,3 +11,13 @@ Feature: registration
   Examples:
     | happy_count | unhappy_count | date        | output            |
     | 20          | 30            | 2013-11-11  | "Registered!"     |
+
+  Scenario: Consulta indice diario
+    Given I am on home_page
+    And I fill in "9" for "daily_mood_happy_count" 
+    And I fill in "1" for "daily_mood_unhappy_count" 
+    And I fill in "2013-11-14" for "daily_mood_date" 
+    And I press "Create Daily mood"
+    When I am on dashboard
+    Then The "happy_percent" should be "90 %"
+    And  The "unhappy_percent" should be "10 %"

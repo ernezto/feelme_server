@@ -56,3 +56,17 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+Capybara.run_server = true
+Capybara.server_port = 4000
+
+Before do
+  if !$dunit 
+    system "rails s -e test -p 4000&"
+    sleep(5)
+    $dunit = true 
+  end
+end
+
+at_exit do
+  system "kill -9 `cat tmp/pids/server.pid`"
+end
