@@ -14,6 +14,11 @@ class DailyMoodsController < ApplicationController
     end
   end
 
+  def daily_moods
+    daily_moods = DailyMood.last()
+    render :json => {happy_value:daily_moods.happy_count, unhappy_value:daily_moods.unhappy_count}.to_json
+  end
+
   private
   def daily_mood_params
     params.require(:daily_mood).permit(:happy_count, :unhappy_count, :date)

@@ -61,4 +61,13 @@ describe DailyMoodsController do
       response.should render_template "new"
     end
   end
+
+  it "should return happy and unhappy value for today" do
+    date = DateTime.now
+    moods = DailyMood.new(happy_count: 1, unhappy_count: 9, date: "2014-11-11")
+    DailyMood.stub(:last).and_return(moods)
+    get :daily_moods
+
+    response.should == moods.to_json
+  end
 end
