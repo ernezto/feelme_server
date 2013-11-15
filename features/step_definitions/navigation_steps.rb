@@ -1,7 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 Given /^I am on (.+)$/ do |page_name|
-  Capybara.app_host = 'http://0.0.0.0:4000'
   @session = Capybara::Session.new(:selenium)
   @session.visit path_to(page_name)
   sleep(2)
