@@ -14,7 +14,7 @@ class DailyMoodsController < ApplicationController
     end
   end
 
-  def daily_moods
+  def today
     daily_mood = DailyMood.today
     render json: { happy_value: daily_mood.happy_count,
                    unhappy_value: daily_mood.unhappy_count }.to_json

@@ -3,5 +3,5 @@ FeelmeServer::Application.routes.draw do
   root :to => 'daily_moods#new' 
   post 'moods/create' => 'moods#create', as: 'create_moods' 
   post 'daily_moods/create' => 'daily_moods#create', as: 'create_daily_moods'
-  get  'daily_moods/get' => 'daily_moods#daily_moods', as: 'get_daily_moods'
+  get  'daily_moods/today' => 'daily_moods#today'
 end
