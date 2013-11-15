@@ -15,8 +15,12 @@ class DailyMoodsController < ApplicationController
   end
 
   def daily_moods
-    daily_moods = DailyMood.today || DailyMood.new(happy_count: 0, unhappy_count: 0)
-    render :json => {happy_value: daily_moods.happy_count, unhappy_value: daily_moods.unhappy_count}.to_json
+    daily_moods = DailyMood.today
+    if (daily_moods.nil?)
+      render :json => {}.to_json
+    else
+      render :json => {happy_value: daily_moods.happy_count, unhappy_value: daily_moods.unhappy_count}.to_json
+    end
   end
 
   private

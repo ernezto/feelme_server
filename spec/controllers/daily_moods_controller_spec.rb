@@ -69,10 +69,10 @@ describe DailyMoodsController do
     response.body.should == {happy_value: moods.happy_count, unhappy_value: moods.unhappy_count}.to_json
   end
 
-  it "should return happy and unhappy value 0 when there is not a daily mood" do
+  it "should return empty json when there is not a daily mood" do
     DailyMood.stub(:today).and_return(nil)
     get :daily_moods
-    response.body.should == {happy_value: 0, unhappy_value: 0}.to_json
+    response.body.should == {}.to_json
   end
 
 

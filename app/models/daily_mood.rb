@@ -3,5 +3,7 @@ class DailyMood < ActiveRecord::Base
   validates :happy_count, presence: true, numericality: true
   validates :unhappy_count, presence: true, numericality: true
 
-  scope :today, -> { where("DATE(date) = ?", Date.today).first }
+  def self.today
+    DailyMood.where("DATE(date) = ?", Date.today).first
+  end
 end
