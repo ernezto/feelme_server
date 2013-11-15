@@ -24,9 +24,9 @@ class DailyMoodsController < ApplicationController
   end
 
   def current_week
-      current_week_moods = DailyMood.current_week
-      render json: { happy_values: current_week_moods.map(&:happy_count),
-                     unhappy_values: current_week_moods.map(&:unhappy_count) }
+    @current_week_moods = DailyMood.current_week 
+
+    render formats: [:json]
   end
 
   private

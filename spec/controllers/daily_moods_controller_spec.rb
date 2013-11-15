@@ -73,11 +73,9 @@ describe DailyMoodsController do
 
   describe "current_week" do
     it "should return all existing daily mood data for this week" do
-      mood = DailyMood.new(happy_count: 1, unhappy_count: 9, date: DateTime.now)
-      DailyMood.stub(:current_week).and_return([mood])
+      DailyMood.stub(:current_week).and_return([])
       get :current_week
-      response.body.should == { happy_values: [1],
-                                unhappy_values: [9] }.to_json
+      response.header['Content-Type'].should include 'application/json'
     end
   end
 
