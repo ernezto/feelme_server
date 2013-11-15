@@ -63,11 +63,9 @@ describe DailyMoodsController do
   end
 
   it "should return happy and unhappy value for today" do
-    date = DateTime.now
-    moods = DailyMood.new(happy_count: 1, unhappy_count: 9, date: "2014-11-11")
-    DailyMood.stub(:last).and_return(moods)
+    moods = DailyMood.new(happy_count: 1, unhappy_count: 9, date: DateTime.now)
+    DailyMood.stub(:today).and_return(moods)
     get :daily_moods
-
-    response.should == moods.to_json
+    response.body.should == {happy_value: moods.happy_count, unhappy_value: moods.unhappy_count}.to_json
   end
 end
