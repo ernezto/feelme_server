@@ -14,13 +14,19 @@ class DailyMoodsController < ApplicationController
     end
   end
 
-  def daily_moods
+  def today
     daily_moods = DailyMood.today
     if (daily_moods.nil?)
       render :json => {}.to_json
     else
       render :json => {happy_value: daily_moods.happy_count, unhappy_value: daily_moods.unhappy_count}.to_json
     end
+  end
+
+  def current_week
+      current_week_moods = DailyMood.current_week
+      render json: { happy_values: current_week_moods.map(&:happy_count),
+                     unhappy_values: current_week_moods.map(&:unhappy_count) }
   end
 
   private

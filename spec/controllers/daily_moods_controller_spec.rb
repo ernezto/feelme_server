@@ -62,16 +62,28 @@ describe DailyMoodsController do
     end
   end
 
-  it "should return happy and unhappy value for today" do
-    moods = DailyMood.new(happy_count: 1, unhappy_count: 9, date: DateTime.now)
-    DailyMood.stub(:today).and_return(moods)
-    get :daily_moods
-    response.body.should == {happy_value: moods.happy_count, unhappy_value: moods.unhappy_count}.to_json
+  describe "#today" do
+    it "should return happy and unhappy value for today" do
+      mood = DailyMood.new(happy_count: 1, unhappy_count: 9, date: DateTime.now)
+      DailyMood.stub(:today).and_return(mood)
+      get :today
+      response.body.should == {happy_value: mood.happy_count, unhappy_value: mood.unhappy_count}.to_json
+    end
+  end
+
+  describe "current_week" do
+    it "should return all existing daily mood data for this week" do
+      mood = DailyMood.new(happy_count: 1, unhappy_count: 9, date: DateTime.now)
+      DailyMood.stub(:current_week).and_return([mood])
+      get :current_week
+      response.body.should == { happy_values: [1],
+                                unhappy_values: [9] }.to_json
+    end
   end
 
   it "should return empty json when there is not a daily mood" do
     DailyMood.stub(:today).and_return(nil)
-    get :daily_moods
+    get :today
     response.body.should == {}.to_json
   end
 

@@ -57,11 +57,12 @@ end
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Capybara.run_server = true
-Capybara.server_port = 4000
+Capybara.server_port = 3000
+Capybara.app_host = "http://0.0.0.0:#{Capybara.server_port}"
 
 Before do
   if !$dunit 
-    system "rails s -e test -p 4000&"
+    system "rails s -e test -p 3000&"
     sleep(5)
     $dunit = true 
   end

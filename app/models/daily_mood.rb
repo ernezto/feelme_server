@@ -6,4 +6,5 @@ class DailyMood < ActiveRecord::Base
   def self.today
     DailyMood.where("DATE(date) = ?", Date.today).first
   end
+  scope :current_week, -> { where(date: Date.today.beginning_of_week..Date.today.end_of_week) }
 end

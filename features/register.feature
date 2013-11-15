@@ -16,8 +16,7 @@ Feature: registration
     Given I am on home_page
     And I fill in "9" for "daily_mood_happy_count" 
     And I fill in "1" for "daily_mood_unhappy_count" 
-    And I fill in "2013-11-14" for "daily_mood_date" 
+    And I fill today for "daily_mood_date" 
     And I press "Create Daily mood"
     When I am on dashboard
-    Then The "happy_percent" should be "90 %"
-    And  The "unhappy_percent" should be "10 %"
+    Then The pie percentages should be "90 %" and "10 %"
