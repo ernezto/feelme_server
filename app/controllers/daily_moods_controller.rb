@@ -15,10 +15,9 @@ class DailyMoodsController < ApplicationController
   end
 
   def daily_moods
-    puts "here!!"
-    daily_moods = DailyMood.today
-    puts "2 here!!"
-    render :json => {happy_value: daily_moods.happy_count, unhappy_value: daily_moods.unhappy_count}.to_json
+    daily_mood = DailyMood.today
+    render json: { happy_value: daily_mood.happy_count,
+                   unhappy_value: daily_mood.unhappy_count }.to_json
   end
 
   private
