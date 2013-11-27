@@ -1,6 +1,6 @@
 class DailyMoodsController < ApplicationController
   def new
-    @daily_mood = DailyMood.new
+    @daily_mood_vm = DailyMoodViewModel.new(DailyMood.new, Mood.all)
   end
 
   def create
@@ -31,6 +31,7 @@ class DailyMoodsController < ApplicationController
 
   private
   def daily_mood_params
+    p params
     params.require(:daily_mood).permit(:happy_count, :unhappy_count, :date)
   end
 end
