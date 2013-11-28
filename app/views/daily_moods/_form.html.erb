@@ -3,10 +3,11 @@
   <div class="row-fluid well">
     <div class="span6">
 
-      <% @daily_mood_vm.moods.each do |mood| %>
+      <% @moods.each do |mood| %>
         <div class="control-group">
+          <%= hidden_field_tag mood.name, mood.id, name: "daily_mood_view_model[daily_moods][][mood_id]"%>
           <%= label_tag mood.name, nil, class: 'control-label' %>
-          <%= text_field_tag mood.name, nil, name: "daily_mood_view_model[moods][#{mood.id}]"%>
+          <%= text_field_tag mood.name, nil, name: "daily_mood_view_model[daily_moods][][count]"%>
         </div>
       <% end %>
 
