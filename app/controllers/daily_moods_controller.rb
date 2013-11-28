@@ -1,13 +1,14 @@
 class DailyMoodsController < ApplicationController
   def new
-    @daily_mood_vm = DailyMoodViewModel.new(DailyMood.new, Mood.all)
+    @daily_mood_vm = DailyMoodViewModel.new(Mood.all)
   end
 
   def create
-    @daily_mood = DailyMood.new(daily_mood_params)
-    if @daily_mood.valid?
-      @daily_mood.save
-      flash[:success] = "Registered!"
+    @daily_mood_vm = DailyMoodViewModel.new(Mood.all)
+    @daily_mood_vm.attributes = params[:daily_mood_view_model]
+    if @daily_mood_vm.validate!
+      @daily_mood_vm.save
+      flash.now[:success] = "Registered!"
       redirect_to action: "new"
     else
       render action: "new"
@@ -31,7 +32,6 @@ class DailyMoodsController < ApplicationController
 
   private
   def daily_mood_params
-    p params
-    params.require(:daily_mood).permit(:happy_count, :unhappy_count, :date)
+    params.require(:daily_mood_view_model).permit(:moods, :date)
   end
 end

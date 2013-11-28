@@ -3,6 +3,7 @@ class DailyMood < ActiveRecord::Base
 
   validates :date, presence: true, uniqueness: { scope: :mood_id }
   validates :count, presence: true, numericality: true
+  validates :mood, presence: true
 
   def self.today
     DailyMood.where("DATE(date) = ?", Date.today)

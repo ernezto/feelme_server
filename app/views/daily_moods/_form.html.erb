@@ -1,20 +1,22 @@
 <%= form_for @daily_mood_vm, url: create_daily_moods_path do |f| %>
 
   <div class="row-fluid well">
-  <div class="span6">
+    <div class="span6">
 
-      <div class="control-group">
-      </div>
-    <div class="control-group">
-      <%= f.label :date, class: 'control-label'  %>
-      <%= f.date_field :date %>
+      <% @daily_mood_vm.moods.each do |mood| %>
+        <div class="control-group">
+          <%= label_tag mood.name, nil, class: 'control-label' %>
+          <%= text_field_tag mood.name, nil, name: "daily_mood_view_model[moods][#{mood.id}]"%>
+        </div>
+      <% end %>
+
+     <div class="control-group">
+        <%= f.label :date, class: 'control-label'  %>
+        <%= f.date_field :date %>
+     </div>
+
+      <%=f.submit(:class=>'btn btn-primary')%>
+
     </div>
-
-    <%=f.submit(:class=>'btn btn-primary')%>
-
-  </div>
-  <div class="span6">
-  </div>
-<div/>
-
+  <div/>
 <% end %>

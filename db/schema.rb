@@ -11,23 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121220937) do
+ActiveRecord::Schema.define(version: 20131128150515) do
 
   create_table "daily_moods", force: true do |t|
-    t.datetime "date"
-    t.integer  "count"
     t.integer  "mood_id"
-  end
-
-  create_table "mood_tables", force: true do |t|
-    t.string "name"
-    t.string "icon_path"
+    t.integer  "count"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "moods", force: true do |t|
-    t.string  "name"
-    t.string  "icon_path"
-    t.integer "count"
+    t.string   "name"
+    t.string   "icon_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
