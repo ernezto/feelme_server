@@ -33,6 +33,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
+  gem 'simplecov'
+  gem 'rails_best_practices'
 end
 
 group :doc do
