@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131128213530) do
+ActiveRecord::Schema.define(version: 20131205154727) do
 
   create_table "daily_moods", force: true do |t|
     t.integer  "mood_id"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20131128213530) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "daily_moods", ["mood_id"], name: "index_daily_moods_on_mood_id"
 
   create_table "moods", force: true do |t|
     t.string   "name"
