@@ -3,36 +3,29 @@ require "spec_helper"
 describe DailyMoodsController do
 
   describe "GET new" do
-    it "should create a new daily mood" do
+    it "should create a new daily mood view model" do
       get :new
-      assigns(:daily_mood).should be_an_instance_of DailyMood
+      assigns(:daily_mood_vm).should be_an_instance_of DailyMoodViewModel
     end
 
   end
 
   describe "POST create" do
-    it "should assigns a daily mood" do
-      mood = DailyMood.new
-      DailyMood.stub(:new).and_return(mood)
-      post :create, daily_mood: { unhappy_count: "a", happy_count: 15, date: DateTime.now }
-      assigns(:daily_mood).should eq(mood)
+    it "should assigns a daily mood view model" do
+      mood_vm = DailyMoodViewModel.new
+      DailyMoodViewModel.should_receive(:new).with(hash_including date: anything,
+                                         daily_moods: anything).
+                                         and_return(mood_vm)
+      post :create, daily_mood_vm: {daily_moods:anything, date: anything}
+      assigns(:daily_mood_vm).should eq(mood_vm)
     end
 
-    it "should create a daily mood with an unhappy_count of 24" do
-      mood = DailyMood.new
-      DailyMood.should_receive(:new).with(hash_including unhappy_count: "24").and_return(mood)
-      post :create, daily_mood: { unhappy_count: 24 }
-    end
-
-    it "should create a daily mood with an happy_count of 10" do
-      mood = DailyMood.new
-      DailyMood.should_receive(:new).with(hash_including happy_count: "10").and_return(mood)
-      post :create, daily_mood: { happy_count: 10 }
-    end
-
-    it "should save a valid daily mood" do
+    it "should save valids daily moods" do
+      daily_moods = [DailyMood.new(count: 10, mood_id: 1)]
+      daily_mood_vm = DailyMoodViewModel.new(date: DateTime.now, daily_moods: daily_moods)
+      p daily_mood_vm
       expect {
-        post :create, daily_mood: { unhappy_count: 10, happy_count: 15, date: DateTime.now }
+        post :create
       }.to change{ DailyMood.count }.by(1)
     end
 
