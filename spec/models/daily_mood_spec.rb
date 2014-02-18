@@ -18,6 +18,7 @@ describe DailyMood do
       today_mood = DailyMood.create(count: 6, mood: mood, date: today)
       yesterday_mood = DailyMood.create(count: 7, mood: mood, date: yesterday)
       DailyMood.today.should == today_mood
+      1.should == 2
     end
   end
 
